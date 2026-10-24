@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>God of War II Launcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1e9dc;--panel:#e6dccb;--ink:#2a1511;--mute:#6f5d52;--bronze:#8f6420;--ember:#b3331a;--line:#cdbfa8;
+--serif:'Cinzel',Georgia,serif;--sans:'Barlow',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b1210;--panel:#3a1a16;--ink:#efe5d2;--mute:#b3a08c;--bronze:#c99a4a;--ember:#e0512d;--line:#5a2f27}}
+:root[data-theme="dark"]{--bg:#2b1210;--panel:#3a1a16;--ink:#efe5d2;--mute:#b3a08c;--bronze:#c99a4a;--ember:#e0512d;--line:#5a2f27}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);min-height:100vh}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh;max-width:1100px;margin:0 auto}
+nav{border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column;gap:6px}
+.brand{font:800 20px/1.1 var(--serif);letter-spacing:.04em;margin-bottom:22px}
+.brand small{display:block;font:500 13px var(--sans);color:var(--mute);letter-spacing:0;margin-top:6px}
+nav button{background:none;border:0;color:var(--mute);font:500 16px var(--sans);text-align:left;padding:10px 12px;border-left:3px solid transparent;cursor:pointer}
+nav button[aria-selected="true"]{color:var(--ink);border-left-color:var(--ember);background:var(--panel)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+main{padding:36px clamp(18px,4vw,48px)}
+h1{font:800 clamp(34px,6vw,60px)/1 var(--serif);margin:0 0 10px;letter-spacing:.02em}
+h2{font:600 20px var(--serif);margin:0 0 14px}
+.sub{color:var(--mute);max-width:46ch;margin:0 0 28px}
+.meander{height:14px;margin:0 0 26px;background:repeating-linear-gradient(90deg,var(--bronze) 0 14px,transparent 14px 20px);-webkit-mask:linear-gradient(#000 0 0);opacity:.7;border-top:3px solid var(--bronze);border-bottom:3px solid var(--bronze);height:12px;background-size:20px 100%}
+.play{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn{font:800 22px var(--serif);letter-spacing:.06em;padding:16px 44px;background:var(--ember);color:#fff;border:0;cursor:pointer;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--line);clip-path:none;font:600 15px var(--sans);padding:12px 18px;letter-spacing:0}
+.bar{height:6px;background:var(--panel);margin-top:22px;max-width:460px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ember);transition:width .25s}
+#status{color:var(--mute);margin-top:10px;min-height:1.5em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;max-width:760px}
+label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+select,input[type=text]{width:100%;padding:10px;background:var(--panel);color:var(--ink);border:1px solid var(--line);font:inherit}
+.row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.row input{accent-color:var(--ember);width:18px;height:18px}
+.row label{margin:0;font-weight:500}
+.note{border-left:3px solid var(--bronze);padding:8px 14px;color:var(--mute);max-width:60ch;margin-top:24px;font-size:14px}
+table{border-collapse:collapse;width:100%;max-width:560px}
+td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mute);font-weight:500}
+
+.cb{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;max-width:560px}
+.cb .btn.alt{padding:14px 20px;font-weight:600}
+.cb .x{margin-left:8px;color:var(--mute);cursor:pointer}
+.add{margin-top:18px;max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.add input{grid-column:span 1}.add .full{grid-column:1/-1}
+[hidden]{display:none!important}
+@media(max-width:700px){.app{grid-template-columns:1fr}nav{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px}.brand{display:none}nav button{border-left:0;border-bottom:3px solid transparent;white-space:nowrap}nav button[aria-selected="true"]{border-bottom-color:var(--ember)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav role="tablist" aria-label="Launcher sections">
+  <div class="brand">GOD OF WAR II<small>Game launcher</small></div>
+  <button role="tab" aria-selected="true" data-tab="play">Play</button>
+  <button role="tab" aria-selected="false" data-tab="settings">Settings</button>
+  <button role="tab" aria-selected="false" data-tab="saves">Save slots</button>
+</nav>
+<main>
+  <section id="play">
+    <h1>God of War II</h1>
+    <div class="meander" aria-hidden="true"></div>
+    <p class="sub">Your game is ready. Check your settings, then start playing.</p>
+    <div class="play">
+      <button class="btn" id="launch">PLAY</button>
+      <button class="btn alt" data-goto="settings">Change settings</button>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+    <div id="status" role="status" aria-live="polite"></div>
+    <h2 style="margin-top:34px;font-size:17px">My buttons</h2>
+    <div class="cb" id="cb"></div>
+    <div class="add">
+      <input type="text" id="cl" placeholder="Button name (e.g. Start game)" aria-label="Button name">
+      <input type="text" id="cp" placeholder="App package (e.g. your emulator)" aria-label="App package name">
+      <input type="text" id="cu" class="full" placeholder="Game file or link to open (optional)" aria-label="Game file or link">
+      <button class="btn alt full" id="ca">Add button</button>
+    </div>
+    <p class="note">This page is a launcher interface. Browsers can’t start programs on your computer, so “Play” runs a preview of the launch sequence. See the note under Settings for connecting it to a real emulator.</p>
+  </section>
+
+  <section id="settings" hidden>
+    <h2>Settings</h2>
+    <div class="grid">
+      <div><label for="path">Game file (your own copy)</label><input type="text" id="path" placeholder="C:\Games\GodOfWar2.iso"></div>
+      <div><label for="res">Resolution</label><select id="res"><option>1x native</option><option>2x native</option><option>3x native</option><option>4x native</option></select></div>
+      <div><label for="aspect">Aspect ratio</label><select id="aspect"><option>4:3</option><option>16:9</option></select></div>
+      <div><label for="renderer">Renderer</label><select id="renderer"><option>Vulkan</option><option>OpenGL</option><option>Direct3D 11</option><option>Software</option></select></div>
+    </div>
+    <div class="row"><input type="checkbox" id="full"><label for="full">Start in fullscreen</label></div>
+    <div class="row"><input type="checkbox" id="vsync"><label for="vsync">Turn on vertical sync</label></div>
+    <div class="row"><input type="checkbox" id="pad"><label for="pad">Use game controller</label></div>
+    <div class="row"><button class="btn alt" id="save">Save settings</button><span id="saved" role="status"></span></div>
+    <p class="note">To launch a real game, use a desktop app (Python or Electron) that runs your PS2 emulator’s command line with these options and your own legally owned game file. I can build that version for you.</p>
+  </section>
+
+  <section id="saves" hidden>
+    <h2>Save slots</h2>
+    <table>
+      <tr><th>Slot</th><th>Chapter</th><th>Last played</th></tr>
+      <tbody id="slots"></tbody>
+    </table>
+  </section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ids=['path','res','aspect','renderer','full','vsync','pad'];
+function show(t){$$('section').forEach(s=>s.hidden=s.id!==t);$$('nav [data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t))}
+$$('nav [data-tab]').forEach(b=>b.onclick=()=>show(b.dataset.tab));
+$$('[data-goto]').forEach(b=>b.onclick=()=>show(b.dataset.goto));
+function load(){try{const d=JSON.parse(localStorage.getItem('gow2')||'{}');ids.forEach(i=>{const e=$('#'+i);if(!(i in d))return;e.type==='checkbox'?e.checked=d[i]:e.value=d[i]})}catch(e){}}
+$('#save').onclick=()=>{const d={};ids.forEach(i=>{const e=$('#'+i);d[i]=e.type==='checkbox'?e.checked:e.value});let ok=true;try{localStorage.setItem('gow2',JSON.stringify(d))}catch(e){ok=false}$('#saved').textContent=ok?'Settings saved.':'Could not save settings in this browser.'};
+$('#launch').onclick=()=>{
+  const b=$('#launch'),f=$('#fill'),s=$('#status');b.disabled=true;
+  const steps=[[15,'Checking game file…'],[40,'Loading '+$('#renderer').value+' renderer…'],[70,'Applying '+$('#res').value+' at '+$('#aspect').value+'…'],[100,'Ready. In the desktop version, the game starts now.']];
+  let i=0;f.style.width='0';(function n(){if(i>=steps.length){b.disabled=false;return}f.style.width=steps[i][0]+'%';s.textContent=steps[i][1];i++;setTimeout(n,700)})();
+};
+const slots=[['Slot 1','Chapter 3','Today'],['Slot 2','Chapter 1','3 days ago'],['Slot 3','Empty','—']];
+$('#slots').innerHTML=slots.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('');
+load();
+let CB=[];try{CB=JSON.parse(localStorage.getItem('gow2cb')||'[]')}catch(e){}
+function saveCB(){try{localStorage.setItem('gow2cb',JSON.stringify(CB))}catch(e){}}
+function renderCB(){const w=$('#cb');w.innerHTML='';if(!CB.length){w.innerHTML='<span class="sub" style="margin:0">No buttons yet. Add one below.</span>';return}
+CB.forEach((b,i)=>{const d=document.createElement('span');const k=document.createElement('button');k.className='btn alt';k.textContent=b.label;
+k.onclick=()=>{if(window.Android){Android.launch(b.pkg||'',b.uri||'')}else{$('#status').textContent='Preview only: "'+b.label+'" runs in the Android app.'}};
+const x=document.createElement('span');x.className='x';x.textContent='✕';x.title='Remove '+b.label;x.setAttribute('role','button');x.tabIndex=0;
+x.onclick=()=>{CB.splice(i,1);saveCB();renderCB()};d.append(k,x);w.append(d)})}
+$('#ca').onclick=()=>{const l=$('#cl').value.trim();if(!l)return;CB.push({label:l,pkg:$('#cp').value.trim(),uri:$('#cu').value.trim()});saveCB();['cl','cp','cu'].forEach(i=>$('#'+i).value='');renderCB()};
+renderCB();
+</script>
+</body>
+</html>
